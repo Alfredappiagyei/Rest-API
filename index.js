@@ -1,24 +1,21 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const {   bankListController, createBankController, updateBankController,  deleteBankController} = require("./controllers") 
-
+const accountRoutes = require("./Routes/accounts");
+const bankRoutes = require("./Routes/banks");
+const userRoutes = require("./Routes/user");
 const mongoose = require("mongoose");
+
 mongoose.connect('mongodb+srv://Alfred:alfred815@cluster0.6zspx.mongodb.net/BankDB?retryWrites=true&w=majority',
- {useNewUrlParser: true, useUnifiedTopology: true});
+ {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify :false});
 
 const server = express();
  
 // Middleware
 server.use(bodyParser.json());
-
-
-
-
-// Routes
-server.get("/bank", bankListController);
-server.post("/bank", createBankController);
-server.put("/bank", updateBankController);
-server.delete("/bank", deleteBankController);
+//  Routes
+server.use(accountRoutes);
+server.use(bankRoutes);
+server.use(userRoutes);
 
 
 
